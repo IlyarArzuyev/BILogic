@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Looker Studio Frame</title>
+  <title>Looker Studio Авто-Масштаб</title>
   <style>
     html, body {
       margin: 0;
@@ -11,28 +11,27 @@
       height: 100%;
       font-family: sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      overflow: hidden;
     }
 
     .glass-frame {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100vw;
       height: 100vh;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(0px);
       -webkit-backdrop-filter: blur(0px);
-      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: auto; /* включает прокрутку при необходимости */
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
     }
 
     .iframe-wrapper {
-      width: 100%;
-      max-width: 1200px;
+      width: 1200px;  /* оригинальная ширина отчёта Looker Studio */
       height: 100%;
+      transform-origin: top left;
+      transform: scale(1);
     }
 
     iframe {
@@ -41,25 +40,11 @@
       border: none;
       display: block;
     }
-
-    @media (max-width: 768px) {
-      .iframe-wrapper {
-        width: 100%;
-        height: 100%;
-        min-width: 100vw;
-        overflow-x: auto;
-      }
-
-      iframe {
-        width: 1200px; /* фиксированная ширина отчета Looker Studio */
-        height: 100%;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="glass-frame">
-    <div class="iframe-wrapper">
+    <div class="iframe-wrapper" id="wrapper">
       <iframe
         src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
         allowfullscreen
@@ -67,5 +52,17 @@
       ></iframe>
     </div>
   </div>
+
+  <script>
+    function resizeIframe() {
+      const wrapper = document.getElementById('wrapper');
+      const scale = window.innerWidth / 1200;
+      wrapper.style.transform = `scale(${scale})`;
+      wrapper.style.height = `${window.innerHeight / scale}px`;
+    }
+
+    window.addEventListener('resize', resizeIframe);
+    window.addEventListener('load', resizeIframe);
+  </script>
 </body>
 </html>
