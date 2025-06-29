@@ -21,14 +21,13 @@
       width: 100%;
       max-width: 1200px;
       height: auto;
-      aspect-ratio: 3 / 2; /* сохранит пропорции */
+      aspect-ratio: 3 / 2;
       overflow: hidden;
       position: relative;
     }
 
     .scaled-iframe {
       transform-origin: top left;
-      transform: scale(0.33); /* масштабируем iframe */
       width: 1200px;
       height: 800px;
       border: none;
@@ -43,6 +42,7 @@
         width: 1200px;
         height: 800px;
       }
+
       .scaled-iframe {
         transform: scale(1);
         position: static;
@@ -51,13 +51,34 @@
   </style>
 </head>
 <body>
-  <div class="iframe-wrapper">
+  <div class="iframe-wrapper" id="wrapper">
     <iframe
       class="scaled-iframe"
+      id="report"
       src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
       allowfullscreen
       sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
     ></iframe>
   </div>
+
+  <script>
+    function adjustScale() {
+      const screenWidth = window.innerWidth;
+      const scale = Math.min(screenWidth / 1200, 1); // max scale = 1 (100%)
+      const iframe = document.getElementById("report");
+      const wrapper = document.getElementById("wrapper");
+
+      if (screenWidth < 1200) {
+        iframe.style.transform = `scale(${scale})`;
+        wrapper.style.height = `${800 * scale}px`;
+      } else {
+        iframe.style.transform = "scale(1)";
+        wrapper.style.height = "800px";
+      }
+    }
+
+    window.addEventListener("load", adjustScale);
+    window.addEventListener("resize", adjustScale);
+  </script>
 </body>
 </html>
