@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Looker Studio Frame</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* фон */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+    }
+
+    .glass-frame {
+      width: 90%;
+      height: 90%;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08); /* полупрозрачный */
+      backdrop-filter: blur(0px); /* без блюра (можно сделать blur(10px) если надо матовость) */
+      -webkit-backdrop-filter: blur(0px);
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-frame">
+    <iframe src="https://lookerstudio.google.com/reporting/fbc5d8fd-1e74-436d-8fec-c4157325286c" allowfullscreen></iframe>
+  </div>
+</body>
+</html>
