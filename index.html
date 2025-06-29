@@ -9,13 +9,12 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       font-family: sans-serif;
-      overflow: hidden; /* чтобы не было двойной прокрутки */
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     }
 
     .glass-frame {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100vw;
@@ -23,28 +22,50 @@
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(0px);
       -webkit-backdrop-filter: blur(0px);
-      border: none;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
-      overflow: auto; /* добавляем прокрутку */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto; /* включает прокрутку при необходимости */
+    }
+
+    .iframe-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      height: 100%;
     }
 
     iframe {
-      min-width: 1200px; /* гарантируем, что влезет весь отчёт */
-      min-height: 100%;
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
+
+    @media (max-width: 768px) {
+      .iframe-wrapper {
+        width: 100%;
+        height: 100%;
+        min-width: 100vw;
+        overflow-x: auto;
+      }
+
+      iframe {
+        width: 1200px; /* фиксированная ширина отчета Looker Studio */
+        height: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="glass-frame">
-    <iframe
-      src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
-      allowfullscreen
-      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-    ></iframe>
+    <div class="iframe-wrapper">
+      <iframe
+        src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      ></iframe>
+    </div>
   </div>
 </body>
 </html>
