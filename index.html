@@ -2,15 +2,15 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Looker Studio Авто-Масштаб</title>
+  <meta name="viewport" content="width=1200, user-scalable=no" />
+  <title>Looker Studio | Desktop Only</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: sans-serif;
       overflow: hidden;
     }
 
@@ -22,15 +22,15 @@
       -webkit-backdrop-filter: blur(0px);
       display: flex;
       justify-content: center;
-      align-items: start;
+      align-items: center;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
-      overflow: auto;
     }
 
     .iframe-wrapper {
-      width: 1200px;  /* оригинальная ширина отчёта */
-      height: 800px;  /* оригинальная высота отчёта */
-      transform-origin: top left;
+      width: 1200px;
+      height: 800px;
+      position: relative;
+      display: none; /* скрыто до загрузки */
     }
 
     iframe {
@@ -39,13 +39,41 @@
       border: none;
       display: block;
     }
+
+    .loader {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border: 10px solid rgba(255, 255, 255, 0.2);
+      border-top: 10px solid #00cfff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 1199px) {
+      body::before {
+        content: "Доступно только на ПК";
+        color: white;
+        font-size: 24px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   </style>
 </head>
 <body>
   <div class="glass-frame">
-    <div class="iframe-wrapper" id="wrapper">
+    <div class="loader" id="loader"></div>
+    <div class="iframe-wrapper" id="iframeWrapper">
       <iframe
-        id="report"
+        id="reportFrame"
         src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
         allowfullscreen
         sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
@@ -54,16 +82,14 @@
   </div>
 
   <script>
-    function resizeIframe() {
-      const wrapper = document.getElementById('wrapper');
-      const screenWidth = window.innerWidth;
-      const baseWidth = 1200;
-      const scale = screenWidth / baseWidth;
-      wrapper.style.transform = `scale(${scale})`;
-    }
+    const frame = document.getElementById("reportFrame");
+    const loader = document.getElementById("loader");
+    const wrapper = document.getElementById("iframeWrapper");
 
-    window.addEventListener('resize', resizeIframe);
-    window.addEventListener('load', resizeIframe);
+    frame.onload = () => {
+      loader.style.display = "none";
+      wrapper.style.display = "block";
+    };
   </script>
 </body>
 </html>
