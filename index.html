@@ -3,18 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Looker Studio Миниатюра</title>
+  <title>Отчёт | Ваша Компания</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: #0f2027;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       height: 100vh;
       width: 100vw;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header {
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .glass-wrapper {
+      width: 100%;
+      max-width: 1240px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.07); /* стеклянный эффект */
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+      border-radius: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: sans-serif;
+      backdrop-filter: none; /* без матовости */
+      -webkit-backdrop-filter: none;
     }
 
     .iframe-wrapper {
@@ -51,20 +76,24 @@
   </style>
 </head>
 <body>
-  <div class="iframe-wrapper" id="wrapper">
-    <iframe
-      class="scaled-iframe"
-      id="report"
-      src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
-      allowfullscreen
-      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-    ></iframe>
+  <div class="header">Аналитика | Ваша Компания</div>
+
+  <div class="glass-wrapper">
+    <div class="iframe-wrapper" id="wrapper">
+      <iframe
+        class="scaled-iframe"
+        id="report"
+        src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      ></iframe>
+    </div>
   </div>
 
   <script>
     function adjustScale() {
       const screenWidth = window.innerWidth;
-      const scale = Math.min(screenWidth / 1200, 1); // max scale = 1 (100%)
+      const scale = Math.min(screenWidth / 1200, 1);
       const iframe = document.getElementById("report");
       const wrapper = document.getElementById("wrapper");
 
