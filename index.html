@@ -2,27 +2,34 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Looker Studio Встраивание</title>
+  <meta 
+    name="viewport" 
+    content="width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>Looker Studio Фрейм (фиксировано)</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      padding: 20px;
+      padding: 0;
       background-color: #0f2027;
+      width: 100%;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+    }
+
+    iframe {
+      width: 400px;
+      height: 296px;
+      border: none;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
     }
   </style>
 </head>
 <body>
   <iframe
-    width="700"
-    height="1000"
     src="https://lookerstudio.google.com/embed/reporting/d8f59fc0-812b-4731-b471-9b3e0e01507e/page/6riPF"
-    frameborder="0"
-    style="border:0"
     allowfullscreen
     sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
   ></iframe>
