@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
   <title>Отчёт | Ваша Компания</title>
   <style>
     html, body {
@@ -12,6 +15,7 @@
       height: 100vh;
       width: 100vw;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden; /* 🚫 убираем горизонтальный скролл */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -31,15 +35,13 @@
       width: 100%;
       max-width: 1240px;
       padding: 16px;
-      background: rgba(255, 255, 255, 0.07); /* стеклянный эффект */
+      background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
       border-radius: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      backdrop-filter: none; /* без матовости */
-      -webkit-backdrop-filter: none;
     }
 
     .iframe-wrapper {
