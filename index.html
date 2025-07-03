@@ -2,114 +2,50 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta 
-    name="viewport" 
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
-  <title>Отчёт | Ваша Компания</title>
+  <title>Генератор договора</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      height: 100vh;
-      width: 100vw;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden; /* 🚫 убираем горизонтальный скролл */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .header {
-      color: white;
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-    }
-
-    .glass-wrapper {
-      width: 100%;
-      max-width: 1240px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-      border-radius: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .iframe-wrapper {
-      width: 100%;
-      max-width: 1200px;
-      height: auto;
-      aspect-ratio: 3 / 2;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .scaled-iframe {
-      transform-origin: top left;
-      width: 1200px;
-      height: 800px;
-      border: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    @media (min-width: 768px) {
-      .iframe-wrapper {
-        aspect-ratio: auto;
-        width: 1200px;
-        height: 800px;
-      }
-
-      .scaled-iframe {
-        transform: scale(1);
-        position: static;
-      }
-    }
+    body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+    form { max-width: 600px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+    input, textarea { width: 100%; margin-bottom: 1rem; padding: 0.7rem; font-size: 1rem; }
+    button { padding: 0.8rem 1.5rem; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="header">Аналитика | Ваша Компания</div>
-
-  <div class="glass-wrapper">
-    <div class="iframe-wrapper" id="wrapper">
-      <iframe
-        class="scaled-iframe"
-        id="report"
-        src="https://lookerstudio.google.com/embed/reporting/fbc5d8fd-1e74-436d-8fec-c4157325286c/page/3WePF"
-        allowfullscreen
-        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-      ></iframe>
-    </div>
-  </div>
+  <form id="contract-form">
+    <h2>Создание договора</h2>
+    <input name="contract_number" placeholder="Номер договора" required />
+    <input name="city" placeholder="Город" required />
+    <input name="date" type="date" required />
+    <input name="client_full" placeholder="ФИО клиента" required />
+    <input name="client_id_info" placeholder="Удостоверение личности" required />
+    <input name="client_address" placeholder="Адрес клиента" required />
+    <input name="client_phone" placeholder="Телефон клиента" required />
+    <textarea name="service_description" placeholder="Описание услуги" required></textarea>
+    <input name="summ" placeholder="Сумма цифрами (₸)" required />
+    <input name="summ_text" placeholder="Сумма прописью" required />
+    <input name="payment_terms" placeholder="Условия оплаты" required />
+    <input name="service_deadline" type="date" placeholder="Срок выполнения" required />
+    <button type="submit">Сгенерировать договор</button>
+  </form>
 
   <script>
-    function adjustScale() {
-      const screenWidth = window.innerWidth;
-      const scale = Math.min(screenWidth / 1200, 1);
-      const iframe = document.getElementById("report");
-      const wrapper = document.getElementById("wrapper");
+    document.getElementById('contract-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-      if (screenWidth < 1200) {
-        iframe.style.transform = `scale(${scale})`;
-        wrapper.style.height = `${800 * scale}px`;
+      const response = await fetch("https://workalmaty.ru/webhook-test/1460f53b-fa9b-4a79-a25a-d8cc9a0311e7", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert("Договор отправлен в обработку!");
       } else {
-        iframe.style.transform = "scale(1)";
-        wrapper.style.height = "800px";
+        alert("Ошибка при отправке. Попробуйте снова.");
       }
-    }
-
-    window.addEventListener("load", adjustScale);
-    window.addEventListener("resize", adjustScale);
+    });
   </script>
 </body>
 </html>
